@@ -8,13 +8,13 @@ datasource db {
 }
 
 model users {
-  id         String     @id @default(cuid())
-  name       String
-  email      String     @unique
-  password   String
-  role       Role       @default(contestee)
-  created_at DateTime   @default(now())
-  contests   contests[]
+	id String @id @default(cuid())
+	name String
+	email String @unique
+	password String
+	created_at DateTime @default(now())
+	role Role @default(contestee)
+	contests contests[]
 }
 
 model contests {
@@ -25,7 +25,7 @@ model contests {
   start_time    DateTime
   end_time      DateTime
   created_at    DateTime        @default(now())
-  author        users           @relation(fields: [creator_id], references: [id])
+  creator        users           @relation(fields: [creator_id], references: [id])
   dsa_problems  dsa_problems[]
   mcq_questions mcq_questions[]
 }
