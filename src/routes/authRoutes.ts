@@ -1,9 +1,9 @@
 import { Elysia } from "elysia";
-import { authControllerExports } from "../controllers/authControllers";
+import { authController } from "../controllers/authControllers";
 export const app = new Elysia();
 
 app.group('/auth', (app) => {
-	app.post('/signup', authControllerExports.signupUser);
-	app.post('/login', authControllerExports.loginUser);
+	app.post('/signup', authController.signupUser);
+	app.post('/login', authController.loginUser);
 	return app;
 });

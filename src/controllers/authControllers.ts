@@ -4,7 +4,6 @@ import { response } from "..";
 import jwt from "jsonwebtoken";
 import { prisma } from "../db";
 
-
 const signupUser = async (ctx: Context) => {
 	const validated = signupSchema.safeParse(ctx.body);
 	if (!validated.success) return status(400, response(false, null, "INVALID_REQUEST"));
@@ -21,6 +20,7 @@ const signupUser = async (ctx: Context) => {
 			role: validated.data.role ? validated.data.role : 'contestee'
 		}
 	});
+	console.log(createdUser);
 	return status(201, response(true, createdUser, null));
 }
 
@@ -35,11 +35,12 @@ const loginUser = async (ctx: Context) => {
 		omit: { password: true, created_at: true }
 	});
 	if (!loggedUser) return status(401, response(false, null, "INVALID_CREDENTIALS"));
+	console.log(loggedUser);
 	const token = jwt.sign({ userId: loggedUser.id, role: loggedUser.role }, process.env.JWT_SECRET!);
 	return status(200, response(true, { token: token }, null));
 }
 
-export const authControllerExports = {
+export const authController = {
 	signupUser,
 	loginUser
 }

@@ -2,7 +2,7 @@ import { Elysia, status, type Context } from "elysia";
 import jwt, { type JwtPayload } from "jsonwebtoken";
 import { response } from "..";
 
-interface payloadData extends Context {
+export interface payloadData extends Context {
 	userId?: string;
 	role?: string;
 }

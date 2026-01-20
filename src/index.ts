@@ -1,13 +1,8 @@
-import { Elysia, status, type Context } from "elysia";
-import jwt, { type JwtPayload } from "jsonwebtoken";
-
-interface payloadData extends Context {
-	userId?: string;
-	role?: string;
-}
+import { Elysia, type Context } from "elysia";
 
 const app = new Elysia();
 import { app as authRoutes } from "./routes/authRoutes";
+import { app as contestRoutes } from "./routes/contestRoutes"
 
 export const response = (success: boolean, data: object | null, error: string | null) => {
 	return {
@@ -19,6 +14,7 @@ export const response = (success: boolean, data: object | null, error: string | 
 
 app.group('/api', (app) => {
 	app.use(authRoutes);
+	app.use(contestRoutes);
 	return app;
 })
 
