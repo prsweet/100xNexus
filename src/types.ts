@@ -18,3 +18,14 @@ export const creatingContestSchema = z.object({
 	"startTime": z.iso.datetime(),
 	"endTime": z.iso.datetime()
 });
+
+export const contestmcqSchema = z.object({
+	"questionText": z.string(),
+	"options": z.array(z.string()),
+	"correctOptionIndex": z.number(),
+	"points": z.number()
+}).refine(data => data.correctOptionIndex >= 0 && data.correctOptionIndex <= data.options.length && data.options.length > 1);
+
+export const submitquestionSchema = z.object({
+	"selectedOptionIndex": z.number()
+}).refine(data => data.selectedOptionIndex >= 0);

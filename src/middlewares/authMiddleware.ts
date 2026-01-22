@@ -9,7 +9,7 @@ export interface payloadData extends Context {
 
 export const auth = (ctx: payloadData) => {
 	try {
-		const token = ctx.headers.authorization?.split(' ')[1] as string;
+		const token = ctx.headers.authorization!.split(' ')[1] as string;
 		const decoded = jwt.verify(token, process.env.JWT_SECRET!) as JwtPayload;
 		ctx.userId = decoded.userId;
 		ctx.role = decoded.role;

@@ -15,6 +15,7 @@ model users {
 	created_at DateTime @default(now())
 	role Role @default(contestee)
 	contests contests[]
+	mcq_submissions mcq_submissions[]
 }
 
 model contests {
@@ -39,6 +40,7 @@ model mcq_questions {
 	points Int @default(1)
 	created_at DateTime @default(now())
 	contest contests @relation(fields: [contest_id], references: [id])
+	mcq_submissions mcq_submissions[]
 }
 
 model dsa_problems {
@@ -52,6 +54,18 @@ model dsa_problems {
 	memory_limit Int @default(256)
 	created_at DateTime @default(now())
 	contest contests @relation(fields: [contest_id], references: [id])
+}
+
+model mcq_submissions {
+    id String @id @default(cuid())
+    user_id String
+    user users @relation(fields: [user_id], references: [id])
+    question_id String @unique
+    question mcq_questions @relation(fields: [question_id], references: [id])
+    selected_option_index Int
+    is_correct Boolean
+    points_earned Int @default(0)
+    submitted_at DateTime @default(now())
 }
 
 enum Role {
